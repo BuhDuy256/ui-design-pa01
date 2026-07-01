@@ -72,23 +72,23 @@ That is **5 distinct screens/steps between tapping Finish and reaching a stable 
 
 #### i. Human capability
 
-- **Benefit**: The in-progress and Stopped screens use large, high-contrast numerals for Time/Distance/Speed, readable via brief downward glances — appropriate for a user whose visual attention must stay mostly forward while walking, not fixed on the screen.
-- **Drawback**: Pause/Resume/Finish confirmation is purely visual (large button, color change) with no confirmed audio or haptic cue. For a user glancing at the screen only briefly while moving, a visual-only confirmation is easier to miss than a spoken or vibration cue would be.
+- **Benefit — foveal vision** (*LN02, "Human vision"*: "the eye sees a small region in high detail (fovea)... put detail where the eye focuses"): the in-progress and Stopped screens place Time/Distance/Speed as large, high-contrast numerals centered on screen — exactly where a brief downward glance's fovea lands, appropriate given the user's gaze had to stay mostly on the path ahead.
+- **Drawback — feedback channel** (*LN02, "Feedback"*: "actions should have immediate effects... feedback channels: audio, visual, haptic"; *LN02, "Motor system"*: "feedback is important... minimize eye movement"): Pause/Resume/Finish confirmation is delivered only through the **visual** channel (button color/label change). This conflicts with the "minimize eye movement" principle for a user who must keep their eyes mostly forward while walking — a haptic or audio channel would confirm the action without requiring a look.
 
 #### ii. User mental model
 
-- **Benefit**: The Start → Pause/Resume → Finish sequence maps directly onto the real-world action of "going for a walk, then stopping." This required no learning — the user's own account confirms this is exactly their mental model of the app's entire purpose (*"Core value => Ấn Start, Stop, Resume, Finish Walk"*).
-- **Drawback — confirmed mismatch**: Immediately after tapping Finish, the user expected to land in an activity history/detail view (with sharing available *if wanted*). Instead, the system moved directly into a Save Activity form, then an unrequested achievement popup, then an auto-presented Share Activity sheet. Quoted directly: *"Trong suy nghĩ hơi khác của tôi là sau khi ấn Finish (walk) thì nó hiện ra phần share buổi đi bộ => Kiểu hơi lạ."* This is a specific, observed violation of the user's expected system state, not a generic "confusing flow" claim.
+- **Benefit — mental model match** (*LN02 definition*: "mental model... internal constructions... enabling predictions to be made... how to use it"): Start → Pause/Resume → Finish maps directly onto the real-world action "go for a walk, then stop." No new mental model was required — confirmed directly: *"Core value => Ấn Start, Stop, Resume, Finish Walk."*
+- **Drawback — mental model violation, no closure** (*LN02 mental model definition*; *Shneiderman's Golden Rule #4, "Design dialogs to yield closure," LN02/LN03*; *LN03, "Prevent errors"*: "support complete sequences, e.g., wizards offering both Next and Finish"): the user's mental model predicted Finish = "done, land on activity view." Instead, the system inserted 4 more screens (Save form → "Nice work!" → achievement popup → Share sheet) before reaching a stable state — a sequence that does not "yield closure" at the point the user expected it, and does not offer a "Finish-only" path the way LN03's complete-sequence principle recommends. Quoted directly: *"Trong suy nghĩ hơi khác của tôi là sau khi ấn Finish (walk) thì nó hiện ra phần share buổi đi bộ."*
 
 #### iii. Interaction metaphors
 
-- **Benefit**: Resume/Pause use standard media-player icons (▶ / ❚❚), and "Finish" uses a checkered-flag icon — both metaphors are borrowed from contexts (music/video players, racing) the user already knows, so no Strava-specific learning was needed to operate them.
+- **Benefit — familiar metaphor** (*LN02 definition*: "a set of user interface visuals, actions and procedures that exploit specific knowledge users already have of other domains"): Resume/Pause icons (▶ / ❚❚) and the checkered-flag "Finish" icon borrow directly from media-player and racing domains the user already knows, requiring no Strava-specific learning to operate.
 
 #### iv. Usability
 
-- **Learnability**: High for this specific loop. As a genuine first-time user with no prior Strava exposure, the Start/Pause/Resume/Finish sequence was operated without hesitation or reported errors.
-- **Efficiency**: Minimal taps required for the core task (Start, optional Pause/Resume, Finish) — but efficiency drops after Finish, where 4 additional un-skippable-feeling screens appear before the user reaches a stable end state.
-- **Errors**: No accidental taps were reported during the recording portion itself.
+- **Learnability** (*LN01/LN02 usability dimension*): High — a genuine first-time user with no prior Strava exposure operated the core loop without hesitation.
+- **Efficiency** (*LN02, "Usability goals & measurable targets"*: "Speed of performance — time to carry out benchmark tasks — reduce"): minimal taps for the core recording loop, but efficiency drops sharply after Finish — 4 extra, un-requested screens before a stable end state, directly working against the "reduce time to complete" goal for what the user considered a finished task.
+- **Errors**: none reported during the recording portion itself.
 
 ### d. Different User Types and Contexts
 
@@ -114,8 +114,8 @@ The observed session happened outdoors in daylight with a stable 4G signal throu
 
 ### e. Propose specific HCI-based solutions
 
-- **For the Finish → Share mismatch**: insert a lightweight, skippable confirmation screen immediately after Finish (e.g., "Activity saved. View it now, or share later?") *before* the achievement popup and share sheet. This preserves the user's expected mental model (Finish = done) while still offering sharing as an optional next step instead of an automatic one.
-- **For the visual-only Pause/Finish confirmation**: add a short haptic tap on state change (Start/Pause/Resume/Finish), so confirmation doesn't rely solely on a glance at the screen while the user is walking.
+- **Reasoning chain**: Observed issue — Finish is followed by 4 non-optional screens → Concept — this violates Shneiderman's Golden Rule #4 "design dialogs to yield closure" and Golden Rule #7 "support user control" (*LN02/LN03*), and breaks the user's mental model of Finish = done (*LN02*) → Design implication — the sequence needs an explicit closure point that the user controls → **Solution**: insert a lightweight, skippable confirmation immediately after Finish (e.g., "Activity saved. View it now, or share later?"), giving the flow an actual closure point matching the user's mental model, while keeping sharing as an optional, user-controlled step rather than a forced one.
+- **Reasoning chain**: Observed issue — Pause/Finish confirmation is visual-only → Concept — this conflicts with *LN02*'s motor-system principle to "minimize eye movement" for a user in motion, and underuses the available feedback channels (audio/visual/haptic, *LN02 "Feedback"*) → Design implication — confirmation should not require looking at the screen → **Solution**: add a short haptic pulse on each state change (Start/Pause/Resume/Finish), so confirmation doesn't rely solely on a glance while the user is walking.
 
 ---
 
@@ -139,12 +139,13 @@ The observed session happened outdoors in daylight with a stable 4G signal throu
 
 #### i. Human capability
 
-- **Benefit**: Data is presented as large-number stat blocks and charts (Elevation, Pace) rather than dense tables, reducing the visual/cognitive effort needed to scan results.
-- **Drawback**: Multiple similarly-named metrics are shown close together with no inline explanation — see mental model section below for the specific confirmed confusion.
+- **Benefit — chunking** (*LN02, "Chunking"*: "group and format information to reduce chunk count"): data is presented as large-number stat blocks and charts (Elevation, Pace) rather than dense tables, reducing the visual/cognitive scanning effort.
+- **Drawback**: multiple similarly-named metrics are shown close together with no inline explanation — see mental model section below for the specific confirmed confusion.
 
 #### ii. User mental model
 
-- **Drawback — confirmed confusion**: The user could not distinguish between **Avg Pace, Avg Elapsed Pace, Moving Time, and Elapsed Time** shown together on the same screen (`IMG_0527`). Quoted directly: *"Có mấy cái như Avg Elapsed Time + Elapsed Time + Fastest Split là tôi không hiểu làm gì?"* This is a concrete terminology/learnability problem, not a generic "confusing UI" claim — the user was forced to guess rather than recognize what each metric meant.
+- **Drawback — recognition vs. recall** (*LN02 core concept*: "Recognition: remembering with a visible cue... Recall: remembering with no cue... prefer recognition over recall"; *LN02, Common Mistakes*: "forcing recall when recognition would do"): **Avg Pace, Avg Elapsed Pace, Moving Time, and Elapsed Time** are shown with no visible cue distinguishing their meaning, forcing the user into a recall-like guessing process instead of recognition. Quoted directly: *"Có mấy cái như Avg Elapsed Time + Elapsed Time + Fastest Split là tôi không hiểu làm gì?"*
+- **Drawback — consistency / user's language** (*LN02, "Consistency"*: "speak the user's language: common words, avoid slang/jargon"): "Elapsed Pace" alongside "Pace" and "Elapsed Time" alongside "Moving Time" reads as near-duplicate jargon rather than plain, distinguishable language — this is a specific, concrete instance of the "speak the user's language" principle being violated, not a generic complaint.
 
 #### iii. Interaction metaphors
 
@@ -152,8 +153,8 @@ Charts (elevation profile, pace-over-distance) use familiar line/area-chart conv
 
 #### iv. Usability
 
-- **Learnability**: Low for this specific screen — confirmed the user could not interpret several metric labels without external help.
-- **Errors**: None observed (this is a read-only review screen), but misreading a stat (e.g., confusing Moving Time with Elapsed Time) is a plausible consequence of the labeling confusion, though not directly observed as a downstream error in this session.
+- **Learnability** (*LN02, "Usability goals & measurable targets"*: "time to learn — how long to learn the actions for a task set — reduce"): Low for this specific screen — confirmed the user could not interpret several metric labels without external help, working against the "reduce time to learn" goal.
+- **Errors** (*Shneiderman's Golden Rule #5, "prevent errors," LN02/LN03*): none observed directly (this is a read-only review screen), but misreading a stat (e.g., confusing Moving Time with Elapsed Time) is a plausible downstream error risk created by the labeling confusion, though not directly observed in this session.
 
 ### d. Different User Types and Contexts
 
@@ -171,7 +172,7 @@ Not tested in this project.
 
 ### e. Propose specific HCI-based solutions
 
-- Add a brief inline info icon (already present for "Pace" and "Elevation" section headers, per `IMG_0526`/`0527` — but its content was not opened/tested in this session) that explicitly defines Moving Time vs. Elapsed Time, and Avg Pace vs. Avg Elapsed Pace, directly next to the metric on first view, rather than requiring the user to seek out or already know the distinction.
+- **Reasoning chain**: Observed issue — user cannot distinguish Avg Pace/Avg Elapsed Pace/Moving Time/Elapsed Time → Concept — labels force **recall** instead of **recognition** (*LN02*), and violate "speak the user's language" (*LN02, Consistency*) by using near-duplicate jargon → Design implication — give the user a visible cue at the point of reading, not require prior domain knowledge → **Solution**: add a brief inline info icon/definition directly next to each ambiguous metric (Moving Time vs. Elapsed Time; Avg Pace vs. Avg Elapsed Pace) on first view. This converts a recall task into a recognition task and satisfies Shneiderman's Golden Rule #3, "offer informative feedback" (*LN02/LN03*).
 
 ---
 
@@ -199,15 +200,16 @@ No specific vision/motor/hearing constraint was reported for this use case beyon
 
 #### ii. User mental model
 
-- **Drawback — confirmed confusion**: The user did not understand what "Segments" meant, or how it differed from the route-length/elevation/surface filters, on first sight. Quoted directly: *"Ko, tôi chả hiểu lắm... Tôi phải ấn thử nhiều tab mới hiểu."* This is a first-time user encountering Strava-specific jargon ("Segment" = a fixed, competitive timed section of road/trail with a leaderboard) with no in-context explanation on the tab itself.
+- **Drawback — no existing mental model + consistency/jargon** (*LN02, "Consistency"*: "speak the user's language: common words, avoid slang/jargon"; *LN02 mental model definition*): "Segment" is Strava-specific terminology with no in-context definition. The user had no existing mental model to map it onto, and the interface built none — confirmed directly: *"Ko, tôi chả hiểu lắm... Tôi phải ấn thử nhiều tab mới hiểu."*
+- **Drawback — recognition vs. recall, learned by trying** (*LN02*: "prefer recognition over recall"; *LN04, "requirements document / task analysis"*: task descriptions should record "how it's learned — training, install-and-use, by trying, by watching others"): with no visible cue explaining "Segment," the user had to learn its meaning **by trying** (trial-and-error tapping) — per LN04's own framework, "by trying" is a less efficient learning mode than a label being recognizable at a glance.
 
 #### iii. Interaction metaphors
 
-The tab bar (Segments / Length / Elevation / Surface / Difficulty) uses generic pill-button styling with no icon or visual distinction to hint at what each does differently — the metaphor here is closer to a plain filter list than something self-explanatory, which likely contributed to the trial-and-error behavior observed.
+- **Drawback — affordance without meaning** (*LN02, "Affordances"*: "the object's appearance suggests how to use it — which one is a button?"): the tab bar (Segments / Length / Elevation / Surface / Difficulty) gives all tabs identical pill-button styling — equal affordance — but only some tabs (Length, Elevation, Surface) are self-explanatory filters, while "Segments" requires prior domain knowledge. Identical affordance across tabs of unequal difficulty misleads the user into expecting them to be equally easy to understand.
 
 #### iv. Usability
 
-- **Learnability**: Low for a first-time user — confirmed only understood after actively tapping through multiple tabs, not from reading labels alone.
+- **Learnability** (*LN02, "Usability goals & measurable targets"*: "time to learn — reduce"): Low for a first-time user — confirmed only understood after actively tapping through multiple tabs, not from reading labels alone, working against the "reduce time to learn" goal.
 
 ### d. Different User Types and Contexts
 
@@ -221,7 +223,7 @@ Not tested in this project. An experienced runner already familiar with the "seg
 
 ### e. Propose specific HCI-based solutions
 
-- Add a one-line explanatory subtitle under the "Segments" tab label the first time a user opens Maps (e.g., "Segments: timed sections other athletes compete on") rather than relying on the label alone or requiring trial-and-error exploration to learn the term.
+- **Reasoning chain**: Observed issue — "Segments" is not understood on first sight, learned only "by trying" → Concept — this violates "speak the user's language" (*LN02, Consistency*), gives no visible cue for **recognition** (*LN02*), and matches LN04's least-efficient learning mode ("by trying") rather than being learnable at a glance → Design implication — the label needs a visible, in-context definition → **Solution**: add a one-line explanatory subtitle under the "Segments" tab label the first time a user opens Maps (e.g., "Segments: timed sections other athletes compete on"), turning a trial-and-error task into a recognition task and shortening the "time to learn" usability goal (*LN02*).
 
 ---
 
@@ -246,23 +248,23 @@ Not tested in this project. An experienced runner already familiar with the "seg
 
 #### i. Human capability
 
-- **Drawback**: The Join button's high visual salience (bright orange, primary-CTA styling) draws the user's attention and hand directly to it, bypassing the surrounding card text. This is a specific case of visual salience overriding reading/comprehension — the user's own account confirms attention narrowed to the button and skipped past understanding what the button vs. the rest of the card each do.
+- **Drawback — foveal attention capture** (*LN02, "Human vision"*: "the eye sees a small region in high detail (fovea)... put detail where the eye focuses"): the Join button's high-contrast orange, primary-CTA styling is the most visually salient element on the card, capturing the user's foveal fixation and directing action there first, at the expense of reading the surrounding card text. Confirmed directly: *"When i see a club card or challenge card, i will focus to button and enter it without reading 'join'..."*
 
 #### ii. User mental model
 
-- **Drawback — confirmed mismatch**: The user expected tapping Join to lead to a detail page. Instead, tapping only toggled the button's own state, with no navigation. Quoted directly: *"Nothing happens, the button just change the status. What I expect is it jump into the more detail."* The user never discovered that opening the card itself (elsewhere than the button) might reveal more detail, because attention stayed fixed on the button: *"I refuse in finding out how can i see the detail by focusing into button without reading and thinking the feature of button."* This is a discoverability failure caused by an ambiguous split between "tap the button" (a quick action) and "tap the card" (navigation) — the interface gives no visual cue that these are two different tap targets.
+- **Drawback — conceptual model mismatch** (*LN02 definition*: conceptual model = "the mental model people carry of how something should be done... described in core activities, objects, and interface metaphors"): the user's conceptual model was "tap the prominent element on a card → see more detail." The system's actual model was "tap Join → toggle local state only, no navigation." Quoted directly: *"Nothing happens, the button just change the status. What I expect is it jump into the more detail."* *"I refuse in finding out how can i see the detail by focusing into button without reading and thinking the feature of button."* This is a specific conceptual-model mismatch, not a vague "confusing card" complaint.
 
 #### iii. Interaction metaphors
 
-- **Drawback**: challenge/club cards mix two different metaphors on one surface — "card as a button" (tap to act, e.g. Join) and "card as a link" (tap to open detail) — with no visual distinction (like a chevron or "View Details" label) separating them. This ambiguity is exactly what produced the confirmed confusion above.
+- **Drawback — consistency and affordances** (*LN02, "Consistency"*: "similar things should work similarly; different things should look different"; *LN02, "Affordances"*: "the object's appearance suggests how to use it — which one is a button?"): Join (a state-toggle action) and "open detail" (a navigation action) are two different operations overlapping on the same card surface with no distinct visual affordance separating them — a direct violation of the "different things should look different" principle.
 
 #### iv. Usability
 
-- **Learnability**: Low for discovering the detail view — the user never found it in this session, despite repeated exposure to challenge/club cards.
-- **Errors**: No destructive error occurred (tapping Join is reversible/harmless), but the user also never confirmed whether "Join" succeeded in any meaningful way beyond the button label changing — a visibility-of-system-status gap.
-- **Satisfaction**: The user reported feeling "normal" about the mismatch, attributing this to their own exploratory/testing mindset rather than genuine investment in the outcome — confirmed directly: *"No. I feel normal. Maybe because I just wanna test."* This suggests the same mismatch could register as more frustrating for a user with a real, urgent goal, rather than someone deliberately testing the app.
+- **Learnability**: Low — the user never discovered the detail view in this session, despite repeated exposure to challenge/club cards.
+- **Feedback / Visibility** (*LN02, "Feedback"*: "actions should have immediate effects"; *LN02, "Visibility"*: "operations should be visible to users"; *Shneiderman's Golden Rule #3, "offer informative feedback," LN02/LN03*): the button-label change is adequate feedback for the Join toggle itself, but the interface gives **no feedback and no visibility at all** for the separate operation of viewing details — that operation effectively doesn't exist from the user's point of view.
+- **Satisfaction** (*LN01/LN02 usability dimension*): the user reported feeling "normal" about the mismatch, attributing this to an exploratory/testing mindset rather than genuine investment in the outcome — confirmed directly: *"No. I feel normal. Maybe because I just wanna test."* This suggests the same visibility/feedback gap could register as more frustrating for a user with a real, urgent goal.
 
-**For Clubs specifically**: the user's actual goal — finding a running club active in their own running area — was **not fulfilled** (confirmed: answered "No" when asked if they left feeling they'd accomplished something). What was shown instead was a generic "Create Your Own Strava Club" promo and "The Strava Club" (Strava's own official club), with no location- or activity-based club search/discovery visible in the screenshots reviewed for this project. This should be read as "not found in this session," not as confirmed proof that no such feature exists elsewhere in the app.
+**For Clubs specifically — task analysis gap** (*LN04, "Task analysis"*: each task's analysis should capture its **goal** and the **user environment** where it's performed; the requirements document should map real user goals to supporting features): the user's actual goal — finding a running club active in their own running area — was **not fulfilled** (confirmed: answered "No" when asked if they left feeling they'd accomplished something). What was shown instead was a generic "Create Your Own Strava Club" promo and "The Strava Club" (Strava's own official club), with no location- or activity-based club discovery visible in the screenshots reviewed. Per LN04, a properly captured task analysis for "find a club" should record the user's goal and environment explicitly — the absence of a corresponding entry point is evidence this goal wasn't matched to a discoverable feature (or the feature exists but wasn't surfaced), not proof the feature is entirely absent from the app.
 
 ### d. Different User Types and Contexts
 
@@ -280,14 +282,15 @@ Not tested in this project.
 
 ### e. Propose specific HCI-based solutions
 
-- Add a distinct "View Details" affordance (e.g., a chevron icon, or making the full card body tappable with a separate, visually smaller Join button) so joining and viewing details are spatially and visually distinguishable, instead of overlapping on the same tap target.
-- After tapping Join, show a brief, explicit confirmation (e.g., "Joined! Tap here to see challenge details") so the state change is visible and immediately offers the path to detail the user was originally looking for.
-- For Clubs: if location- or activity-based club discovery exists elsewhere in the app, surface a "Find a club near you" or "Find a Walk/Run club" entry point directly on the Clubs tab's landing view, rather than only showing "Create your own" and the single official Strava Club.
+- **Reasoning chain**: Observed issue — Join and "open detail" share one tap target with no distinction → Concept — this violates Consistency ("different things should look different") and Affordances (*LN02*) → Design implication — the two operations need separate, visually distinct affordances → **Solution**: add a distinct "View Details" affordance (e.g., a chevron icon, or making the full card body tappable with a separate, visually smaller Join button), restoring both consistency and visibility.
+- **Reasoning chain**: Observed issue — after tapping Join, the only feedback is the button's own label change → Concept — this satisfies "immediate effect" (*LN02, Feedback*) for the toggle itself, but leaves the "view details" operation entirely without feedback or visibility (*LN02, Visibility*; Shneiderman's Golden Rule #3) → Design implication — pair the state-change feedback with an explicit next step → **Solution**: show a brief confirmation with a direct link, e.g., "Joined! Tap here to see challenge details."
+- **Reasoning chain**: Observed issue — the user's real goal (finding a nearby running club) had no visible entry point → Concept — this is a task-analysis gap (*LN04*: task analysis should capture user goals and environment, and map them to supporting features) → Design implication — a common, confirmed user goal should have a direct feature behind it → **Solution**: if location- or activity-based club discovery exists elsewhere in the app, surface a "Find a club near you" or "Find a Walk/Run club" entry point directly on the Clubs tab's landing view, rather than only showing "Create your own" and the single official Strava Club; if no such feature exists at all, this task-analysis gap is itself the finding.
 
 ---
 
 ## Notes on Scope and Evidence
 
 - Per project scope (see `CLAUDE.md`), this document covers **Product 1 (Strava) only**. Product 2 is a teammate's responsibility.
-- Use cases above are limited to the flows with **confirmed first-hand context** (`strava-usage-context-notes.md`). Other observed flows (You/Workouts, Settings) are cataloged in `strava-screenshot-inventory.md` but not yet written up as full use cases, pending first-hand context.
+- Use cases above are limited to the flows with **confirmed first-hand context** (`strava-usage-context-notes.md`). Other observed flows (You/Workouts, Settings) are cataloged in `strava-screenshot-inventory.md` but not yet written up as full use cases, pending first-hand context — **before adding any new use case, the group should be interviewed with targeted context questions first, not assumed.**
 - Each use case's "e. Propose specific HCI-based solutions" subsection is Requirement 2 content, kept inline in this same document per the assignment template — both requirements live together in `report.md`.
+- HCI reasoning in sections "c" and "e" of every use case is grounded in specific concepts from the course slides: `LN02 - Fundamental Concepts - Usability Dimensions.md` (feedback channels, visibility, affordances, consistency, recognition vs. recall, mental model, conceptual model, interface metaphor, chunking, usability goals), `LN03 - UI Design Process.md` (Shneiderman's Eight Golden Rules, error prevention/complete sequences), and `LN04 - Task Analysis.md` (task analysis fields — goal, user environment, how a task is learned). Concepts not present in these slides (e.g., "signifier," "Gulf of Execution/Evaluation") were deliberately not cited, since they weren't confirmed as part of this course's material.
