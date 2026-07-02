@@ -42,12 +42,26 @@ Strava's own trend data shows running is still the most-tracked sport on the pla
 **Trigger**: user opens the Record tab and taps Start.
 **Steps observed**:
 1. In-progress recording screen — live map, live stats (Time/Distance/Speed), Pause button.
+![In-progress recording screen](strava-images/IMG_0514.PNG)
+*IMG_0514 — In-progress recording screen: live map with Time/Distance/Speed and a Pause button.*
 2. Tap Pause → Stopped screen — large-number stat display (Distance, Avg Speed), Resume/Finish buttons.
+![Stopped screen](strava-images/IMG_0515.PNG)
+*IMG_0515 — Stopped screen: large-number Distance/Avg Speed display with Resume/Finish buttons.*
 3. Tap Finish → Save Activity, screen 1 (title, description, activity type dropdown, map preview, tags).
+![Save Activity screen 1](strava-images/IMG_0517.PNG)
+*IMG_0517 — Save Activity screen 1: title/description fields, Walk type dropdown, map preview.*
 4. Scroll to Save Activity, screen 2 ("How did that feel?", private notes, gear, Visibility setting, Mute Activity checkbox, Save Activity button).
+![Save Activity screen 2](strava-images/IMG_0518.PNG)
+*IMG_0518 — Save Activity screen 2: How did that feel, Visibility, Mute Activity, Save Activity button.*
 5. Tap Save Activity → "Nice work!" transition animation.
+![Nice work transition screen](strava-images/IMG_0519.PNG)
+*IMG_0519 — "Nice work!" transition animation screen.*
 6. → "Welcome to the team, Duy!" first-activity achievement popup (View Activity / View in Trophy Case).
+![First-activity achievement popup](strava-images/IMG_0520.PNG)
+*IMG_0520 — "Welcome to the team, Duy!" first-activity achievement popup.*
 7. → Share Activity sheet opens automatically (map + stats card, Share to Message/Strava Message/Strava Post/Copy Link/More).
+![Share Activity sheet](strava-images/IMG_0522.PNG)
+*IMG_0522 — Share Activity sheet: map+stats card with Share to Message/Strava Post/Copy Link options.*
 
 That is **5 separate screens between tapping Finish and reaching a stable end state** — not one confirmation.
 
@@ -65,7 +79,7 @@ That is **5 separate screens between tapping Finish and reaching a stable end st
 
 #### i. Human capability
 
-- **Benefit — foveal vision**: The eye sees fine detail only in a small central region (the fovea); the rest of the visual field mostly picks up motion. The in-progress and Stopped screens put Time/Distance/Speed as large, high-contrast numbers centered on screen — exactly where a quick downward glance lands. This fits a user whose eyes need to stay mostly on the path ahead.
+- **Benefit — foveal vision**: While walking, the user could only spare a quick downward glance at the phone before looking back at the path. The in-progress and Stopped screens put Time/Distance/Speed as large, high-contrast numbers centered on screen — exactly where that glance lands. This works because the eye only sees fine detail in a small central region (the fovea), so a number needs to sit right at that center point to be read in one look.
 - **Drawback — visual-only feedback while walking**: Confirming Pause/Resume/Finish relies only on the visual channel — a button changing color or label. Human feedback can travel through sight, sound, or touch (vibration), and the walking user's eyes are already busy watching the road. A visual-only signal forces an extra look at exactly the moment the design should be minimizing eye movement.
 
 #### ii. User mental model
@@ -103,7 +117,7 @@ A user relying on a screen reader would depend entirely on the visual-only feedb
 
 #### v. Environmental constraints
 
-The recorded session happened outdoors in daylight with a stable signal. Two risks follow directly from the interface even though they weren't hit in this session: the app's black recording screen would suffer from glare in direct sunlight since dark backgrounds show reflections more than light ones, and GPS drift in dense urban areas (tall buildings blocking satellite signal) would directly corrupt the live distance/pace numbers this use case depends on.
+The recorded session happened outdoors in daylight with a stable signal, so glare and GPS drift were not actually observed. Still, two conditions are worth flagging as potential risks, since they follow directly from how the screen and the tracking method are built: the recording screen uses a black background, which is more prone to glare under direct sunlight than a lighter one; and the live distance/pace numbers depend entirely on GPS signal, which commonly weakens in dense urban areas with tall buildings blocking the satellite view.
 
 ### e. Propose specific HCI-based solutions
 
@@ -125,7 +139,19 @@ The recorded session happened outdoors in daylight with a stable signal. Two ris
 
 **Goal**: understand how the just-finished activity went — distance, pace, elevation, splits.
 **Trigger**: user opens the saved activity and scrolls through its detail and analysis screens.
-**Screens observed**: Activity detail (distance, moving time, elevation gain) → Workout Analysis (laps, flyover map) → Elevation chart → Pace chart (Avg Pace, Moving Time, Avg Elapsed Pace, Elapsed Time, Fastest Split).
+**Screens observed**:
+- Activity detail screen (distance, moving time, elevation gain).
+![Activity detail screen](strava-images/IMG_0521.PNG)
+*IMG_0521 — Activity detail screen: Distance/Moving Time/Elevation Gain with Kudos banner.*
+- Workout Analysis screen (laps, flyover map).
+![Workout Analysis screen](strava-images/IMG_0525.PNG)
+*IMG_0525 — Workout Analysis screen: Laps list and Flyover map.*
+- Elevation chart.
+![Elevation chart](strava-images/IMG_0526.PNG)
+*IMG_0526 — Elevation chart: Elevation Gain and Max Elevation.*
+- Pace chart / metrics screen (Avg Pace, Moving Time, Avg Elapsed Pace, Elapsed Time, Fastest Split).
+![Pace chart screen](strava-images/IMG_0527.PNG)
+*IMG_0527 — Pace chart screen: Avg Pace/Moving Time/Avg Elapsed Pace/Elapsed Time/Fastest Split.*
 
 ### b. Context and method users interaction with this use case via interface
 
@@ -181,7 +207,13 @@ A user coming from another fitness-tracking app is more likely to already know t
 
 **Goal**: discover nearby routes or segments to run or walk in the future.
 **Trigger**: user taps the Maps tab from the bottom navigation.
-**Screens observed**: Routes sub-view (Length/Elevation/Surface/Difficulty filters, Create Route button, Suggested Routes list) and Segments sub-tab (map with segment pins, "Popular segments" list showing distance, grade, and athlete/effort counts).
+**Screens observed**:
+- Maps tab, Routes sub-view (Length/Elevation/Surface/Difficulty filters, Create Route button, Suggested Routes list).
+![Maps tab, Routes sub-view](strava-images/IMG_0529.PNG)
+*IMG_0529 — Maps tab, Routes sub-view: Length/Elevation/Surface/Difficulty filters and Suggested Routes.*
+- Segments sub-tab / Popular segments screen (map with segment pins, "Popular segments" list showing distance, grade, and athlete/effort counts).
+![Segments sub-tab](strava-images/IMG_0530.PNG)
+*IMG_0530 — Segments sub-tab: map with segment pins and Popular segments list.*
 
 ### b. Context and method users interaction with this use case via interface
 
@@ -235,7 +267,17 @@ A runner already familiar with "segments" from another platform such as Zwift or
 
 **Goal**: explore what the Groups tab offers across its Active, Challenges, and Clubs sub-tabs. For Active and Challenges, this was open curiosity rather than a real need going in. For Clubs specifically, the user had one clear goal: find a running club active in their own area.
 **Trigger**: user taps the Groups tab from bottom navigation.
-**Steps observed**: Active sub-tab ("Design Your Own Challenge" paywall plus joined-challenge progress bars) → Challenges sub-tab ("July 5K Challenge" card, Join button, "Recommended For You" list) → tap Join on the challenge card → the button changes state, but no screen changes → Clubs sub-tab ("Create Your Own Strava Club" promo, "The Strava Club" banner).
+**Steps observed**:
+1. Groups Active tab ("Design Your Own Challenge" paywall plus joined-challenge progress bars).
+![Groups Active tab](strava-images/IMG_0532.PNG)
+*IMG_0532 — Groups Active tab: Design Your Own Challenge paywall and joined-challenge progress bars.*
+2. Challenges tab, card with Join button ("July 5K Challenge" card, Join button, "Recommended For You" list).
+![Challenges tab, Join button](strava-images/IMG_0533.PNG)
+*IMG_0533 — Challenges tab: July 5K Challenge card with Join button and Recommended For You list.*
+3. Tap Join on the challenge card → the button changes state, but no screen changes.
+4. Clubs tab / club discovery screen ("Create Your Own Strava Club" promo, "The Strava Club" banner).
+![Clubs tab](strava-images/IMG_0534.PNG)
+*IMG_0534 — Clubs tab: Create Your Own Strava Club promo and The Strava Club banner.*
 
 ### b. Context and method users interaction with this use case via interface
 
@@ -250,7 +292,7 @@ A runner already familiar with "segments" from another platform such as Zwift or
 
 #### i. Human capability
 
-- **Drawback — the eye goes straight to the loudest element**: Fine visual detail only registers in a small central area of the eye's field of view, so design should put important detail exactly where that focus naturally lands. The Join button's bright orange, primary-action styling is the strongest visual element on each card, so it pulls the user's eye and tap there first, at the cost of reading the rest of the card. The user confirmed this directly: "When I see a club card or challenge card, I focus on the button and tap it without reading 'join'..."
+- **Drawback — a bright button pulls the eye before the card is read**: The user described this directly: "When I see a club card or challenge card, I focus on the button and tap it without reading 'join'..." The Join button's bright orange, primary-action styling is the strongest color contrast on the card. The eye's fine-detail vision only covers a small central area (the fovea); everything outside that spot is picked up through peripheral vision, which reacts to motion and strong contrast rather than detail. A high-contrast button works like that kind of attention-grabbing cue — it pulls the eye, and the tap, toward itself first, before the rest of the card ever gets read.
 
 #### ii. User mental model
 
