@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strava — First-Time User UX Research | CSC13112 PA1</title>
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --gray:#6b7280;
+    --line:#e5e7eb;
+    --accent:#FC4C02;      /* Strava orange, used sparingly */
+    --accent-soft:#fff1eb;
+    --good:#16a34a;
+    --bg:#ffffff;
+    --panel:#f8f9fa;
+    --radius:14px;
+    --font:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--font);
+    background:#eceef1;
+    color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;
+  }
+  .deck{
+    width:min(1120px,96vw);
+    aspect-ratio:16/9;
+    background:var(--bg);
+    border-radius:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.18);
+    position:relative;
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute;inset:0;
+    padding:56px 64px 64px;
+    display:none;
+    flex-direction:column;
+    animation:fade .35s ease;
+  }
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* typography */
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+  h1{font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:34px;line-height:1.12;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .q{font-size:18px;color:var(--gray);font-weight:500;margin-bottom:26px}
+  p{font-size:19px;line-height:1.5}
+  .lead{font-size:22px;color:var(--gray);font-weight:500;margin-top:14px;max-width:44ch}
+
+  /* layout helpers */
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;flex:1}
+  .cols.wideL{grid-template-columns:0.85fr 1.15fr}
+  .stack{display:flex;flex-direction:column;gap:16px}
+
+  /* footer */
+  .foot{position:absolute;left:64px;right:64px;bottom:22px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gray);border-top:1px solid var(--line);padding-top:12px}
+  .foot .course{font-weight:600}
+
+  /* takeaway pill */
+  .takeaway{margin-top:22px;display:inline-flex;align-items:center;gap:10px;background:#fff5f0;border:1px solid #ffd9c7;color:#b8390a;padding:12px 18px;border-radius:999px;font-weight:700;font-size:16px;align-self:flex-start}
+  .takeaway::before{content:"KEY";font-size:10px;letter-spacing:.1em;background:var(--accent);color:#fff;padding:3px 7px;border-radius:6px}
+
+  /* image placeholder */
+  .img{
+    background:var(--panel);
+    border:2px dashed #cbd0d6;
+    border-radius:var(--radius);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--gray);text-align:center;gap:8px;
+    min-height:180px;padding:20px;font-weight:600;
+  }
+  .img .tag{font-size:24px;color:var(--ink);font-weight:800;letter-spacing:.02em}
+  .img .cap{font-size:13px;font-weight:500}
+  .img.phone{aspect-ratio:9/16;max-height:420px;margin:0 auto}
+  .imgrow{display:flex;gap:16px;justify-content:center;align-items:stretch}
+  .imgrow .img{flex:1}
+
+  /* flow */
+  .flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .node{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:700;font-size:15px;white-space:nowrap}
+  .node.start{border-color:var(--good);color:var(--good)}
+  .node.bad{border-color:var(--accent);color:var(--accent);background:#fff5f0}
+  .arrow{color:var(--gray);font-weight:800;font-size:18px}
+
+  /* callout / quote */
+  .quote{border-left:4px solid var(--accent);background:var(--panel);padding:14px 18px;border-radius:0 10px 10px 0;font-style:italic;font-size:17px;color:#374151}
+  .quote small{display:block;font-style:normal;color:var(--gray);margin-top:6px;font-size:13px}
+
+  /* reasoning chain vertical */
+  .chain{display:flex;flex-direction:column;gap:0}
+  .chain .step{display:flex;gap:14px;align-items:flex-start;padding:9px 0}
+  .chain .k{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);width:92px;flex:none;padding-top:3px}
+  .chain .v{font-size:17px;font-weight:600;line-height:1.35}
+  .chain .step + .step{border-top:1px dashed var(--line)}
+
+  /* bullets */
+  ul.clean{list-style:none;display:flex;flex-direction:column;gap:14px}
+  ul.clean li{font-size:20px;font-weight:600;padding-left:30px;position:relative;line-height:1.35}
+  ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:10px;height:10px;border-radius:3px;background:var(--accent)}
+  ul.clean li.ok::before{background:var(--good)}
+  ul.clean li small{display:block;font-weight:500;color:var(--gray);font-size:15px;margin-top:2px}
+
+  /* compare */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .card{border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .card h3{font-size:15px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  .card.win{background:#f2fbf5;border-color:#bbe9c8}
+  .card.win h3{color:var(--good)}
+  .card.fail{background:#fff5f0;border-color:#ffd9c7}
+  .card.fail h3{color:var(--accent)}
+  .card p{font-size:17px;font-weight:600}
+
+  /* tag chips */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .chip{background:#eef1f4;color:#374151;font-size:13px;font-weight:700;padding:6px 11px;border-radius:8px}
+  .chip.hci{background:#fdece4;color:#b8390a}
+
+  /* solution row */
+  .fix{display:flex;align-items:center;gap:10px;background:#f2fbf5;border:1px solid #bbe9c8;border-radius:10px;padding:12px 16px;font-weight:700;font-size:17px;color:#166534}
+  .fix::before{content:"FIX";font-size:10px;letter-spacing:.1em;background:var(--good);color:#fff;padding:3px 7px;border-radius:6px}
+
+  /* numbered big list */
+  ol.moves{list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:18px}
+  ol.moves li{counter-increment:m;display:flex;gap:18px;align-items:flex-start}
+  ol.moves li::before{content:counter(m);flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center}
+  ol.moves .t{font-size:20px;font-weight:800}
+  ol.moves .d{font-size:16px;color:var(--gray);font-weight:500;margin-top:2px}
+
+  /* title slide */
+  .title-slide{justify-content:center;background:
+     radial-gradient(120% 120% at 100% 0%, #fff5f0 0%, #ffffff 42%);}
+  .title-slide h1{max-width:20ch}
+  .title-meta{margin-top:34px;display:flex;flex-direction:column;gap:6px;font-size:17px;color:var(--gray)}
+  .title-meta strong{color:var(--ink)}
+
+  /* nav */
+  .nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 8px;box-shadow:0 6px 18px rgba(0,0,0,.12);z-index:10}
+  .nav button{border:none;background:var(--panel);width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;color:var(--ink)}
+  .nav button:hover{background:var(--accent);color:#fff}
+  .nav .count{font-size:13px;font-weight:700;color:var(--gray);min-width:52px;text-align:center}
+  .divider .body{align-items:flex-start}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- ============ SLIDE 1 — TITLE ============ -->
+  <!-- SPEAKER NOTE: Open with the promise, not the product. "We watched one real beginner use Strava for the first time." ~15s. Don't read the subtitle aloud word for word. -->
+  <section class="slide active title-slide">
+    <div class="eyebrow">Product Research · Strava</div>
+    <h1>What a first-time user really sees in Strava</h1>
+    <p class="lead">A usability study built on one real first walk — observation first, theory second.</p>
+    <div class="title-meta">
+      <span><strong>CSC13112 — UI/UX Design</strong> · PA1 Product Research</span>
+      <span>Presenter: <strong>[Họ tên – MSSV]</strong></span>
+    </div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>Strava UX Research</span></div>
+  </section>
+
+  <!-- ============ SLIDE 2 — CONTEXT & METHOD ============ -->
+  <!-- SPEAKER NOTE: Establish credibility of the method. One user, one real walk, free tier, iPhone. Stress: we watch the BEGINNER's path. End on their own words for the goal. ~40s -->
+  <section class="slide">
+    <div class="eyebrow">Context</div>
+    <h2>Who we watched — and how</h2>
+    <p class="q">One question this study answers: what does a brand-new user actually do?</p>
+    <div class="cols">
+      <ul class="clean">
+        <li>One first-time user<small>No prior Strava experience · iPhone · Free tier</small></li>
+        <li>One real walk<small>Recorded outdoors, ~6 AM, phone in one hand</small></li>
+        <li>Method: observe first, explain later<small>We describe what happened before naming any HCI concept</small></li>
+      </ul>
+      <div class="quote">“Start, Stop, Resume, Finish a walk.”
+        <small>The user's own words for what Strava is “for”</small></div>
+    </div>
+    <div class="takeaway">We study the beginner's real path, not the expert's.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>02 · Context</span></div>
+  </section>
+
+  <!-- ============ SLIDE 3 — THE CORE LOOP WORKS ============ -->
+  <!-- SPEAKER NOTE: This is the BASELINE. Praise the loop honestly so the later problem lands harder. The user succeeded with zero training. Point at the two phone screens. ~40s -->
+  <section class="slide">
+    <div class="eyebrow">Baseline</div>
+    <h2>The core loop just works</h2>
+    <p class="q">Can a beginner record a walk with no help? — Yes.</p>
+    <div class="cols wideL">
+      <div class="imgrow">
+        <div class="img phone"><span class="tag">[IMG_0514]</span><span class="cap">Recording — live map, Pause</span></div>
+        <div class="img phone"><span class="tag">[IMG_0515]</span><span class="cap">Stopped — Resume / Finish</span></div>
+      </div>
+      <div class="stack">
+        <div class="flow">
+          <span class="node start">Start</span><span class="arrow">→</span>
+          <span class="node">Pause</span><span class="arrow">→</span>
+          <span class="node">Resume</span><span class="arrow">→</span>
+          <span class="node">Finish</span>
+        </div>
+        <ul class="clean">
+          <li class="ok">Completed on the first try — no hesitation</li>
+          <li class="ok">Icons already known: ▶ ❚❚ (media), 🏁 (racing)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="takeaway">The recording loop is beginner-proof. Remember this.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>03 · Baseline</span></div>
+  </section>
+
+  <!-- ============ SLIDE 4 — FINDING 1: FINISH != DONE (THE TURN) ============ -->
+  <!-- SPEAKER NOTE: This is the emotional turn of the talk. Slow down. The user taps Finish EXPECTING it to end — and gets 5 screens. Let the flow diagram do the work. Read the quote. Do NOT explain the theory yet. ~55s -->
+  <section class="slide">
+    <div class="eyebrow">Finding 1 · Observe</div>
+    <h2>They tapped “Finish” — expecting it to end</h2>
+    <p class="q">What actually happens after Finish?</p>
+    <div class="cols wideL">
+      <div class="stack">
+        <div class="flow">
+          <span class="node">Finish</span><span class="arrow">→</span>
+          <span class="node">Save form</span><span class="arrow">→</span>
+          <span class="node">“Nice work!”</span><span class="arrow">→</span>
+          <span class="node">Achievement</span><span class="arrow">→</span>
+          <span class="node bad">Share sheet</span>
+        </div>
+        <p style="font-weight:800;font-size:22px;">5 screens before the task actually ends.</p>
+        <div class="quote">“It shows a screen to share the walk — that felt a bit strange.”
+          <small>First-time user, right after tapping Finish</small></div>
+      </div>
+      <div class="img phone"><span class="tag">[IMG_0522]</span><span class="cap">Share sheet — appears automatically, unasked</span></div>
+    </div>
+    <div class="takeaway">Finish didn't end the task — it started a new one.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>04 · Finding 1</span></div>
+  </section>
+
+  <!-- ============ SLIDE 5 — FINDING 1: WHY + FIX ============ -->
+  <!-- SPEAKER NOTE: NOW bring the theory, because the audience already felt the problem. Mental model + closure (Golden Rule 4) + control (7). Then the fix. Mention haptic as the second, smaller fix. ~50s -->
+  <section class="slide">
+    <div class="eyebrow">Finding 1 · Why & Fix</div>
+    <h2>The task never reached “closure”</h2>
+    <div class="cols">
+      <div class="chain">
+        <div class="step"><span class="k">Expected</span><span class="v">Finish = done → show me my activity</span></div>
+        <div class="step"><span class="k">Reality</span><span class="v">4 more screens, ending in a forced Share prompt</span></div>
+        <div class="step"><span class="k">HCI</span><span class="v">Breaks “design dialogs to yield closure” &amp; user control</span></div>
+        <div class="step"><span class="k">Cause</span><span class="v">The flow doesn't end where the mental model says it should</span></div>
+      </div>
+      <div class="stack">
+        <div class="chips"><span class="chip hci">Mental model</span><span class="chip hci">Golden Rule #4 — closure</span><span class="chip hci">Golden Rule #7 — control</span></div>
+        <div class="fix">One closure screen: “Saved. View now · Share later”</div>
+        <div class="fix">Haptic buzz on Start / Pause / Finish — eyes stay on the road</div>
+      </div>
+    </div>
+    <div class="takeaway">Give the task a clear ending the user controls.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>05 · Finding 1</span></div>
+  </section>
+
+  <!-- ============ SLIDE 6 — TRANSITION / PATTERN SET-UP ============ -->
+  <!-- SPEAKER NOTE: Short pivot slide. Zoom out. The loop was built for a beginner; the rest of the app assumes you already know Strava. Preview the 3 walls. Keep it under 25s — it's a hinge, not a stop. -->
+  <section class="slide divider">
+    <div class="eyebrow">The turn</div>
+    <div class="body">
+      <h2 style="font-size:40px;max-width:22ch;">The core loop was built for a beginner.<br>The rest of the app was not.</h2>
+      <p class="lead">Past the record button, a first-timer keeps hitting the same kind of wall — three times.</p>
+      <div class="flow" style="margin-top:26px">
+        <span class="node">2 · Unreadable stats</span><span class="arrow">·</span>
+        <span class="node">3 · Mystery “Segment”</span><span class="arrow">·</span>
+        <span class="node">4 · The Join trap</span>
+      </div>
+    </div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>06 · Pattern set-up</span></div>
+  </section>
+
+  <!-- ============ SLIDE 7 — FINDING 2: UNREADABLE STATS ============ -->
+  <!-- SPEAKER NOTE: Screenshot first. Point at the four near-identical labels. Read the quote. Then: recall vs recognition + jargon. Fix = tap-to-define. ~45s -->
+  <section class="slide">
+    <div class="eyebrow">Finding 2 · Post-activity stats</div>
+    <h2>Numbers the user couldn't read</h2>
+    <div class="cols wideL">
+      <div class="img phone"><span class="tag">[IMG_0527]</span><span class="cap">Pace screen — highlight the 4 similar labels</span></div>
+      <div class="stack">
+        <div class="flow">
+          <span class="node">Avg Pace</span><span class="node">Avg Elapsed Pace</span>
+        </div>
+        <div class="flow">
+          <span class="node">Moving Time</span><span class="node">Elapsed Time</span>
+        </div>
+        <div class="quote">“I don't understand what they're for.”</div>
+        <div class="chips"><span class="chip hci">Recall &gt; Recognition</span><span class="chip hci">Speak the user's language</span></div>
+        <div class="fix">Tap-to-define info icon, shown on first view</div>
+      </div>
+    </div>
+    <div class="takeaway">Near-identical labels force guessing, not reading.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>07 · Finding 2</span></div>
+  </section>
+
+  <!-- ============ SLIDE 8 — FINDING 3: "SEGMENT"? ============ -->
+  <!-- SPEAKER NOTE: The word "Segment" means nothing to a beginner, and the tabs all look identical. Quote about tapping around. Concept: jargon + learned "by trying". Fix = one-line subtitle. ~45s -->
+  <section class="slide">
+    <div class="eyebrow">Finding 3 · Maps tab</div>
+    <h2>“Segment”? — learned by trial and error</h2>
+    <div class="cols wideL">
+      <div class="img phone"><span class="tag">[IMG_0530]</span><span class="cap">Segments tab — pins + Popular segments</span></div>
+      <div class="stack">
+        <div class="flow">
+          <span class="node bad">Segments</span><span class="node">Length</span><span class="node">Elevation</span><span class="node">Surface</span>
+        </div>
+        <p style="font-size:16px;color:var(--gray);font-weight:600">Same pill style — but only one needs Strava knowledge.</p>
+        <div class="quote">“I had to tap several tabs before I understood.”</div>
+        <div class="chips"><span class="chip hci">Jargon</span><span class="chip hci">Learned “by trying”</span><span class="chip hci">Affordance</span></div>
+        <div class="fix">One-line subtitle under “Segments”</div>
+      </div>
+    </div>
+    <div class="takeaway">Identical-looking tabs hide very different difficulty.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>08 · Finding 3</span></div>
+  </section>
+
+  <!-- ============ SLIDE 9 — FINDING 4: THE JOIN TRAP ============ -->
+  <!-- SPEAKER NOTE: Strongest interaction finding. Eye jumps to the orange Join button, taps it, expecting a detail page — gets a silent toggle. Two quotes available; use one. Mention Clubs goal was never met (task gap). Fix: one job per tap target. ~55s -->
+  <section class="slide">
+    <div class="eyebrow">Finding 4 · Groups</div>
+    <h2>The “Join” trap</h2>
+    <div class="cols wideL">
+      <div class="img phone"><span class="tag">[IMG_0533]</span><span class="cap">Challenge card — highlight orange Join button</span></div>
+      <div class="stack">
+        <div class="chain">
+          <div class="step"><span class="k">Eye</span><span class="v">Jumps to the bright orange button → taps it</span></div>
+          <div class="step"><span class="k">Expected</span><span class="v">Open the challenge's detail page</span></div>
+          <div class="step"><span class="k">Reality</span><span class="v">Button silently toggles — nothing else happens</span></div>
+        </div>
+        <div class="quote">“Nothing happens… I expect it jumps into more detail.”</div>
+        <div class="chips"><span class="chip hci">Conceptual-model mismatch</span><span class="chip hci">One tap = two jobs</span></div>
+        <div class="fix">Tappable card = details · small separate Join · “Joined! See details →”</div>
+      </div>
+    </div>
+    <div class="takeaway">One tap target was doing two different jobs.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>09 · Finding 4</span></div>
+  </section>
+
+  <!-- ============ SLIDE 10 — THE PATTERN (SYNTHESIS) ============ -->
+  <!-- SPEAKER NOTE: The payoff. All four findings are ONE story. Core = speaks the beginner's language. Periphery = assumes knowledge they don't have. This is the sentence you want the lecturer to remember. ~40s -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis</div>
+    <h2>One pattern behind all four findings</h2>
+    <div class="compare">
+      <div class="card win">
+        <h3>Core loop</h3>
+        <p>Speaks the beginner's language.<br>Familiar actions, familiar icons, clear steps.</p>
+      </div>
+      <div class="card fail">
+        <h3>Everything around it</h3>
+        <p>Assumes you already know Strava.<br>Jargon · hidden navigation · no closure.</p>
+      </div>
+    </div>
+    <div class="takeaway">Strava onboards the action — not the vocabulary.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>10 · Pattern</span></div>
+  </section>
+
+  <!-- ============ SLIDE 11 — TAKEAWAYS / SOLUTIONS ============ -->
+  <!-- SPEAKER NOTE: Land three concrete, cheap, real-team-feasible moves. Each maps back to findings. Don't over-promise features. ~45s -->
+  <section class="slide">
+    <div class="eyebrow">Solutions</div>
+    <h2>Three cheap moves, all realistic</h2>
+    <div class="body">
+      <ol class="moves">
+        <li><div><div class="t">Close &amp; confirm</div><div class="d">End tasks clearly — a closure screen + haptic feedback (Finding 1)</div></div></li>
+        <li><div><div class="t">Plain language, in place</div><div class="d">Define jargon where it appears — info icon, one-line subtitle (Findings 2 &amp; 3)</div></div></li>
+        <li><div><div class="t">One job per tap</div><div class="d">Distinct affordances — separate “view” from “act” (Finding 4)</div></div></li>
+      </ol>
+    </div>
+    <div class="takeaway">Small in-context cues turn trial-and-error into recognition.</div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>11 · Solutions</span></div>
+  </section>
+
+  <!-- ============ SLIDE 12 — THANK YOU / Q&A ============ -->
+  <!-- SPEAKER NOTE: Short. Restate the one-line thesis, then invite questions. ~15s -->
+  <section class="slide title-slide">
+    <div class="eyebrow">Thank you</div>
+    <h1>Strava onboards the action,<br>not the vocabulary.</h1>
+    <p class="lead">Questions welcome.</p>
+    <div class="title-meta">
+      <span><strong>CSC13112 — UI/UX Design</strong> · PA1 Product Research · Strava</span>
+      <span>[Họ tên – MSSV]</span>
+    </div>
+    <div class="foot"><span class="course">CSC13112 · PA1</span><span>12 · Q&amp;A</span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹</button>
+  <span class="count" id="count">1 / 12</span>
+  <button id="next" aria-label="Next">›</button>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const count=document.getElementById('count');
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    count.textContent=(i+1)+' / '+slides.length;
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){show(i+1);e.preventDefault();}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){show(i-1);e.preventDefault();}
+    if(e.key==='Home')show(0);
+    if(e.key==='End')show(slides.length-1);
+  });
+  show(0);
+</script>
+</body>
+</html>
