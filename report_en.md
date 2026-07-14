@@ -170,8 +170,11 @@ Same session as the recorded walk, reviewing the saved activity on the same iPho
 
 ### d. Different User Types and Contexts
 
-- **Novice user**: matches this session — the confusion occurred on the very first encounter with the screen.
+- **Novice user**: matches this session — the confusion occurred on the very first encounter with the screen, especially with the similar-label group (Avg Pace / Avg Elapsed Pace).
 - **Experienced user**: someone familiar with other fitness tracking apps is likely already aware of the difference between "moving time" and "elapsed time," since this pair of terms is common across the fitness app industry — meaning these labels cause fewer problems for them. However, the similar phrasing of "Pace" vs. "Elapsed Pace" is specific to Strava and is still likely to cause confusion regardless of experience.
+- **Older users**: the screen is manageable in terms of interaction — scrolling and tapping only, no data-entry tasks. However, the stats in the pace chart (especially the Avg Pace / Avg Elapsed Pace cluster observed in IMG_0527) are displayed in smaller text than the main stats — which may make them harder to read for users with weaker eyesight.
+- **Users with disabilities**: the screen is read-only with a single-column layout and no complex input — a screen reader can work well if the labels are properly configured. However, if labels are indistinguishable even when seen, screen-reader users will face the same problem as sighted users: the labels sound similar and it is not clear how they differ.
+- **Usage context**: this screen is viewed after the activity ends, on the same iPhone, in the same session — the user is sitting still with undivided attention. This is a much more favorable condition than Use Case 1 (outdoors, in motion). The label problem is not caused by the environment; it is a design issue: the label cluster causes confusion even when the user has all the time they need to read it.
 
 ### e. Design Recommendations Based on HCI Principles
 
@@ -242,8 +245,11 @@ Same session as the recorded walk, reviewing the saved activity on the same iPho
 
 ### d. Different User Types and Contexts
 
-- **Novice user**: matches this session — first contact with Groups, Challenges, and Clubs.
+- **Novice user**: matches this session — no path to challenge details was found after Join, and no club in the local area was found on the Clubs tab — both main goals were not achieved.
 - **Experienced user**: someone familiar with other card-based social apps might expect to tap the card body to open details, with a separate button for a quick action — Strava's current layout does not separate these two, so the missing detail problem may still occur even for users familiar with card-based interfaces.
+- **Older users**: the Groups tab content is mainly cards and progress bars — no data-entry tasks or complex gestures. In terms of motor interaction, the tab does not create any particular barrier. The difficulty of finding a club and the missing feedback after Join are likely to affect all age groups equally.
+- **Users with disabilities**: the Groups tab has a list-based structure (cards, progress bars) that works well with a screen reader if the content is properly labeled. However, the Join button only changes its label with no additional announcement, which means screen-reader users also receive no clear confirmation after joining a challenge — the same feedback gap already described above.
+- **Usage context**: the Groups tab exploration session was separate from the recorded walk — the user was sitting still, with no urgent task to complete. This means the observed difficulties (no club found, unclear how to track a challenge after Join) appeared even under relaxed, low-pressure conditions — and are likely to be more noticeable in a real-need situation (for example, looking for a club before going for a run).
 
 ### e. Design Recommendations Based on HCI Principles
 
