@@ -30,7 +30,7 @@ Strava's own trend data shows running is still the most-tracked sport on the pla
 
 **Account tier**: Strava has a Free tier and a paid Subscription tier. The Free tier — used in this project — covers recording activities, joining the community, and safety features. The Subscription tier unlocks custom routes, offline maps, full training history, deeper workout analysis, goal tracking, segment leaderboards, and a fitness score. A first-time free user runs into upsell prompts often: "Start a free trial" or "Subscribe" banners appeared repeatedly across the Maps tab, the Workout Analysis screen, the You/Progress tab, the You/Workouts tab, and the Groups tab during the test session.
 
-**Prior knowledge needed**: none for the core loop. The first-time user completed Start → Pause/Resume → Finish without hesitation or help. But secondary features — Segments, the Maps filter tabs, and the paywalled analytics — were not clear on first sight. The user had to tap around by trial and error to figure out what they did (see Use Case 3).
+**Prior knowledge needed**: none for the core loop. The first-time user completed Start → Pause/Resume → Finish without hesitation or help. But secondary, paywalled analytics screens were not clear on first sight.
 
 ---
 
@@ -201,69 +201,9 @@ A user coming from another fitness-tracking app is more likely to already know t
 
 ---
 
-## 4. Use case 3: Exploring the Maps Tab (Segments)
+## 4. Use case 3: Exploring Groups — Challenges & Clubs
 
 ### a. Analyze use case 3
-
-**Goal**: discover nearby routes or segments to run or walk in the future.
-**Trigger**: user taps the Maps tab from the bottom navigation.
-**Screens observed**:
-- Maps tab, Routes sub-view (Length/Elevation/Surface/Difficulty filters, Create Route button, Suggested Routes list).
-![Maps tab, Routes sub-view](strava-images/IMG_0529.PNG)
-*IMG_0529 — Maps tab, Routes sub-view: Length/Elevation/Surface/Difficulty filters and Suggested Routes.*
-- Segments sub-tab / Popular segments screen (map with segment pins, "Popular segments" list showing distance, grade, and athlete/effort counts).
-![Segments sub-tab](strava-images/IMG_0530.PNG)
-*IMG_0530 — Segments sub-tab: map with segment pins and Popular segments list.*
-
-### b. Context and method users interaction with this use case via interface
-
-#### i. Context 1
-
-- **Where / When / User Situation**: Continued from the same first-time exploration session as Use Cases 1 and 2.
-- **Interaction Method**: Tapping between multiple sub-tabs (Segments, Length, Elevation, Surface) by trial and error rather than understanding the labels upfront. The user said: "I had to try tapping several tabs before I understood."
-- **Expected Outcome**: Understand what a "segment" is and how it's different from a "route," without outside help.
-
-### c. Apply HCI principle (Benefit & Drawbacks)
-
-#### i. Human capability
-
-No specific vision, motor, or hearing constraint came up in this use case beyond normal touch interaction with a map screen.
-
-#### ii. User mental model
-
-- **Drawback — no existing mental model, and jargon with no explanation**: "Segment" is Strava-specific wording with no on-screen definition. The user had no prior idea what it meant, and the screen didn't build one for them: "No, I really didn't understand it... I had to try tapping several tabs before I understood."
-- **Drawback — learned by trial and error, not recognition**: With no visible cue explaining "Segment," the user had to learn its meaning by trying — tapping around and observing what happened. Learning a feature by trial and error is far less efficient than being able to recognize its meaning at a glance from a clear label.
-
-#### iii. Interaction metaphors
-
-- **Drawback — same look, different difficulty**: The tab bar (Segments / Length / Elevation / Surface / Difficulty) gives every tab the exact same pill-button styling. But Length, Elevation, and Surface are self-explanatory filters, while Segments needs prior domain knowledge to understand at all. Giving them identical visual weight tells the user they're all equally easy to understand, which isn't true.
-
-#### iv. Usability
-
-- **Learnability**: Low for a first-time user. The label alone didn't explain the feature — understanding only came after actively tapping through multiple tabs.
-
-### d. Different User Types and Contexts
-
-#### i. Beginners
-
-This use case is a direct example — the exact confusion observed in this session.
-
-#### ii. Experienced users
-
-A runner already familiar with "segments" from another platform such as Zwift or Garmin Connect would likely recognize the term immediately, since it's a shared convention across fitness apps, not something unique to Strava.
-
-### e. Propose specific HCI-based solutions
-
-- **Observed problem**: "Segments" was not understood on first sight and only became clear through trial-and-error tapping.
-  **Relevant HCI principle**: speak the user's language instead of unexplained jargon, and favor recognition over recall.
-  **Why the solution works**: a short, visible definition removes the need to guess or experiment — the user can read the meaning the moment they see the tab, instead of learning it by trial and error.
-  **Solution**: the first time a user opens the Maps tab, show a one-line subtitle under the "Segments" label — for example, "Segments: timed sections other athletes compete on." This turns a trial-and-error task into a quick read.
-
----
-
-## 5. Use case 4: Exploring Groups — Challenges & Clubs
-
-### a. Analyze use case 4
 
 **Goal**: explore what the Groups tab offers across its Active, Challenges, and Clubs sub-tabs. For Active and Challenges, this was open curiosity rather than a real need going in. For Clubs specifically, the user had one clear goal: find a running club active in their own area.
 **Trigger**: user taps the Groups tab from bottom navigation.
@@ -341,6 +281,6 @@ A user already familiar with card-based social apps (event apps, group-listing a
 
 ## Notes on Scope and Evidence
 
-This report covers Product 1 (Strava) only. Product 2 is a teammate's separate responsibility. The use cases above are limited to the flows this project directly tested with a real first-time user and matching screenshots: recording and saving a walk, reviewing its stats, browsing the Maps tab, and browsing the Groups tab. Other screens captured during the same session — the You tab's Workouts and Settings sub-tabs — were seen but not tested with a user goal attached, so they are left out of this report rather than written up as guesses.
+This report covers Product 1 (Strava) only. Product 2 is a teammate's separate responsibility. The use cases above are limited to the flows this project directly tested with a real first-time user and matching screenshots: recording and saving a walk, reviewing its stats, and browsing the Groups tab. Other screens captured during the same session — the Maps tab, and the You tab's Workouts and Settings sub-tabs — were seen but not written up as full use cases in this report, so they are left out rather than written up as guesses.
 
 The HCI reasoning in each use case's "Apply HCI principle" and "Propose specific HCI-based solutions" sections draws on three course sources: human capabilities and usability dimensions (feedback channels, visibility, affordances, consistency, recognition vs. recall, mental models, conceptual models, interface metaphors, chunking, and usability goals), Shneiderman's Eight Golden Rules and the UI design process (dialog closure, error prevention, informative feedback, user control), and task analysis (capturing a task's goal, its environment, and how it gets learned).

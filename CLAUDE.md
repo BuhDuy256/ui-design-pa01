@@ -20,3 +20,4 @@
 ## Constriants
 
 - Use simple vocabulary as much as possible in any task.
+- Always responses in Vietnamese.

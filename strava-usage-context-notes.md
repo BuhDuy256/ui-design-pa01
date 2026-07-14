@@ -33,15 +33,6 @@ Screenshot: `strava-images/IMG_0527.PNG` (Pace chart, Avg Pace, Moving Time, Avg
 
 The user could not distinguish between multiple similar-sounding pace/time metrics shown together (Avg Pace vs. Avg Elapsed Pace, Moving Time vs. Elapsed Time). This is a concrete **learnability/terminology problem** — several closely-named metrics presented without explanation, forcing the user to guess rather than recognize. Good candidate for a specific drawback citation (ties to "speak the user's language" / jargon-overload principles from LN02).
 
-## Use Case: Exploring the Maps Tab (Segments sub-tab)
-
-Screenshot: `strava-images/IMG_0530.PNG` — this is the **Segments** sub-tab under Maps (not a generic route-filter screen), showing a map with segment pins and a "Popular segments" list (name, distance, grade, athlete/effort counts).
-
-**Confusion reported:**
-> "Tôi phải ấn thử nhiều tab mới hiểu." (referring to Maps sub-tabs: Segments / Length / Elevation / Surface)
-
-The user did not understand what "Segments," or the Length/Elevation/Surface filters meant on first sight, and only made sense of them through **trial-and-error tapping**, not recognition. This directly illustrates a learnability gap in the Maps tab's information architecture for a first-time user.
-
 ## Subscription Prompts
 
 User confirmed the repeated "Start a free trial" prompts (seen on Maps, Workout Analysis, You/Progress screens) were noticed and registered as upsell pressure — consistent with satisfaction-dimension friction, though not described as strongly negative.

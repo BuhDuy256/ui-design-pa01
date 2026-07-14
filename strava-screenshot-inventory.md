@@ -26,12 +26,6 @@
 
 - **Trophy Case**: Milestones grid — First Activity (unlocked), Third/Fifth/10th/20th/30th Activity (locked). Reached from Home tab. (`IMG_0526` region / one of the mid-sequence files — confirm exact filename before citing)
 
-## Flow 4: Maps Tab
-
-- **Routes sub-view**: filters (Length, Elevation, Surface, Difficulty), "55% Paved" badge, Create Route button, "Explore anywhere with confidence" paywall, Suggested Routes list.
-- **Segments sub-tab**: map with segment pins, "Popular segments" list (name, distance, grade, athlete count, total efforts). Confirmed as `IMG_0530`.
-- **"Map only" mode**: plain map, Create Route button, no overlays. (`IMG_0528`)
-
 ## Flow 5: Groups Tab
 
 - **Active sub-tab**: "Design Your Own Challenge" paywall + joined/active challenges with progress bars (July 5K / 800K Ride / 100K Gran Fondo).
